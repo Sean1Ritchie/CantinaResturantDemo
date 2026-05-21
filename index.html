@@ -1733,14 +1733,14 @@ footer{background:var(--ink);border-top:1px solid rgba(244,239,229,.05);padding:
 })();
 
 /* ── Video mute toggle ──────────────────────── */
+/* Only the centre panel (hPanel2) plays audio — panels 1 & 3 stay permanently muted */
 (()=>{
   const btn=document.getElementById('vidMuteBtn');
-  const vids=document.querySelectorAll('#hPanel1 video,#hPanel2 video,#hPanel3 video');
-  if(!btn||!vids.length)return;
+  const audioVid=document.querySelector('#hPanel2 video');
+  if(!btn||!audioVid)return;
   btn.addEventListener('click',()=>{
-    const muted=!vids[0].muted;
-    vids.forEach(v=>v.muted=muted);
-    btn.textContent=muted?'🔇':'🔊';
+    audioVid.muted=!audioVid.muted;
+    btn.textContent=audioVid.muted?'🔇':'🔊';
   });
 })();
 
