@@ -1,0 +1,1818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Cantina — Le Grand Domaine, Stellenbosch</title>
+<meta name="description" content="A Basque-inspired cantina in the heart of Stellenbosch. Shared paella, Spanish small plates, and a global wine list at 7 Church Street."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Cormorant:ital,wght@1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+/* ════════════════════════════════════════════
+   ROOT & RESET
+════════════════════════════════════════════ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#16110d;
+  --ink-80:rgba(22,17,13,0.80);
+  --terracotta:#b5481a;
+  --terracotta-dark:#8b3412;
+  --parchment:#f4efe5;
+  --sand:#e6ddd0;
+  --sand-2:#d4c8b8;
+  --gold:#c8a249;
+  --gold-bright:#e2c06a;
+  --gold-dim:rgba(200,162,73,0.18);
+  --warm-white:#faf6ef;
+  --charcoal:#2c2318;
+  --dusk:#1e1610;
+  --smoke:rgba(244,239,229,0.08);
+  --font-d:'Cormorant Garamond',Georgia,serif;
+  --font-i:'Cormorant',Georgia,serif;
+  --font-b:'DM Sans',system-ui,sans-serif;
+  --ease:cubic-bezier(.25,.46,.45,.94);
+  --expo:cubic-bezier(.16,1,.3,1);
+  --radius-sm:2px;
+}
+html{scroll-behavior:smooth;font-size:16px;-webkit-font-smoothing:antialiased}
+body{background:var(--warm-white);color:var(--ink);font-family:var(--font-b);font-weight:300;overflow-x:hidden;cursor:none}
+img{display:block;max-width:100%}
+a{text-decoration:none}
+button{cursor:none;border:none;background:none;font-family:inherit}
+
+/* ════════════════════════════════════════════
+   CUSTOM CURSOR
+════════════════════════════════════════════ */
+#cur{position:fixed;width:9px;height:9px;background:var(--terracotta);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s var(--expo),height .3s var(--expo),background .3s;mix-blend-mode:normal}
+#cur-ring{position:fixed;width:38px;height:38px;border:1px solid rgba(200,162,73,.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .4s var(--expo),height .4s var(--expo),opacity .3s}
+#cur.hov{width:16px;height:16px;background:var(--gold)}
+#cur-ring.hov{width:60px;height:60px;opacity:.55}
+#cur.vid-hov{width:56px;height:56px;background:rgba(200,162,73,.15);border:1px solid var(--gold)}
+
+/* ════════════════════════════════════════════
+   PAGE LOADER
+════════════════════════════════════════════ */
+#loader{position:fixed;inset:0;background:var(--ink);z-index:9990;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;transition:opacity .9s var(--expo),visibility .9s}
+#loader.gone{opacity:0;visibility:hidden;pointer-events:none}
+.ld-logo{font-family:var(--font-d);font-size:3rem;font-weight:300;color:var(--warm-white);letter-spacing:.12em}
+.ld-line{height:1px;background:var(--gold);width:0;animation:ldExpand 1.6s var(--expo) .4s forwards}
+@keyframes ldExpand{to{width:110px}}
+.ld-pct{font-family:var(--font-b);font-size:.6rem;letter-spacing:.32em;color:rgba(244,239,229,.38)}
+
+/* ════════════════════════════════════════════
+   NAV
+════════════════════════════════════════════ */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:28px 64px;display:flex;align-items:center;justify-content:space-between;transition:background .5s var(--expo),padding .4s var(--expo),backdrop-filter .5s}
+nav.scrolled{background:rgba(22,17,13,.91);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:16px 64px}
+.nav-logo{font-family:var(--font-d);font-size:1.55rem;font-weight:400;color:var(--warm-white);letter-spacing:.07em;display:flex;flex-direction:column;line-height:1}
+.nav-logo span{font-size:.52rem;font-family:var(--font-b);font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-top:4px}
+.nav-links{display:flex;align-items:center;gap:40px;list-style:none}
+.nav-links a{font-family:var(--font-b);font-size:.68rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:rgba(250,246,239,.75);position:relative;transition:color .3s}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:width .4s var(--expo)}
+.nav-links a:hover{color:var(--warm-white)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{font-family:var(--font-b) !important;font-size:.66rem !important;font-weight:500 !important;letter-spacing:.2em !important;color:var(--ink) !important;background:var(--gold);padding:10px 22px;transition:background .3s,transform .3s !important}
+.nav-cta::after{display:none !important}
+.nav-cta:hover{background:var(--gold-bright);transform:translateY(-1px)}
+.nav-burger{display:none;flex-direction:column;gap:5px;padding:4px}
+.nav-burger span{display:block;width:24px;height:1px;background:var(--warm-white);transition:transform .4s var(--expo),opacity .3s}
+.nav-burger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0}
+.nav-burger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.mob-nav{position:fixed;inset:0;background:var(--dusk);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;opacity:0;pointer-events:none;transition:opacity .5s var(--expo)}
+.mob-nav.open{opacity:1;pointer-events:all}
+.mob-nav a{font-family:var(--font-d);font-size:clamp(2.2rem,6vw,4rem);font-weight:300;color:var(--warm-white);letter-spacing:.04em;transition:color .3s}
+.mob-nav a:hover{color:var(--gold)}
+
+/* ════════════════════════════════════════════
+   SHARED UTILITIES
+════════════════════════════════════════════ */
+.reveal{opacity:0;transform:translateY(44px);transition:opacity .9s var(--expo),transform .9s var(--expo)}
+.reveal.vis{opacity:1;transform:none}
+.reveal-l{opacity:0;transform:translateX(-44px);transition:opacity .9s var(--expo),transform .9s var(--expo)}
+.reveal-l.vis{opacity:1;transform:none}
+.reveal-r{opacity:0;transform:translateX(44px);transition:opacity .9s var(--expo),transform .9s var(--expo)}
+.reveal-r.vis{opacity:1;transform:none}
+
+.sec-label{font-family:var(--font-b);font-size:.58rem;font-weight:400;letter-spacing:.36em;text-transform:uppercase;color:var(--terracotta);display:flex;align-items:center;gap:14px;margin-bottom:26px}
+.sec-label::before{content:'';display:block;width:34px;height:1px;background:var(--terracotta)}
+.sec-label.gold{color:var(--gold)}
+.sec-label.gold::before{background:var(--gold)}
+
+.sec-title{font-family:var(--font-d);font-weight:300;font-size:clamp(2.2rem,4vw,3.9rem);line-height:1.08;color:var(--ink);letter-spacing:-.01em;margin-bottom:32px}
+.sec-title em{font-style:italic;color:var(--terracotta)}
+.sec-title.light{color:var(--warm-white)}
+.sec-title.light em{color:var(--gold)}
+
+.btn-pri{display:inline-block;font-family:var(--font-b);font-size:.66rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);background:var(--gold);padding:15px 34px;transition:background .3s,transform .3s var(--ease)}
+.btn-pri:hover{background:var(--gold-bright);transform:translateY(-2px)}
+.btn-ghost{display:inline-flex;align-items:center;gap:12px;font-family:var(--font-b);font-size:.66rem;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:rgba(250,246,239,.75);transition:color .3s}
+.btn-ghost::before{content:'';display:block;width:30px;height:1px;background:var(--gold);transition:width .4s var(--expo)}
+.btn-ghost:hover{color:var(--warm-white)}
+.btn-ghost:hover::before{width:48px}
+
+/* grain overlay helper */
+.grain::after{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1;opacity:.3}
+
+/* ════════════════════════════════════════════
+   HERO — THREE-PANEL VIDEO
+════════════════════════════════════════════ */
+#hero{position:relative;width:100%;height:100dvh;min-height:600px;overflow:hidden;display:flex;align-items:flex-end}
+
+.hero-panels{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr 1fr}
+.hero-panel{position:relative;overflow:hidden}
+.hero-panel video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.05);animation:panelZoom 18s var(--expo) forwards}
+#hPanel1 video{animation-delay:0s}
+#hPanel2 video{animation-delay:.3s}
+#hPanel3 video{animation-delay:.6s}
+@keyframes panelZoom{from{transform:scale(1.05)}to{transform:scale(1.0)}}
+
+.hero-panel-shade{position:absolute;inset:0;background:rgba(22,17,13,.38);transition:background .5s}
+.hero-panel--mid .hero-panel-shade{background:rgba(22,17,13,.22)}
+.hero-panel:hover .hero-panel-shade{background:rgba(22,17,13,.16)}
+
+.hero-divider{position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent 0%,rgba(200,162,73,.45) 20%,rgba(200,162,73,.45) 80%,transparent 100%);z-index:2;pointer-events:none;opacity:0;animation:divFade 1s ease 1.8s forwards}
+.hero-divider--1{left:33.333%}
+.hero-divider--2{left:66.666%}
+@keyframes divFade{to{opacity:1}}
+
+.hero-overlay{position:absolute;inset:0;z-index:3;background:linear-gradient(170deg,rgba(22,17,13,.08) 0%,rgba(22,17,13,.45) 55%,rgba(22,17,13,.78) 100%);pointer-events:none}
+.hero-grain-layer{position:absolute;inset:0;z-index:4;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");opacity:.28;pointer-events:none}
+
+.hero-content{position:relative;z-index:5;padding:0 80px 80px;max-width:920px}
+.hero-eyebrow{font-family:var(--font-b);font-size:.62rem;font-weight:400;letter-spacing:.36em;text-transform:uppercase;color:var(--gold);margin-bottom:22px;opacity:0;transform:translateY(18px);animation:fu 1s var(--expo) .9s forwards}
+.hero-h1{font-family:var(--font-d);font-weight:300;font-size:clamp(3.6rem,9.5vw,8.8rem);line-height:.9;color:var(--warm-white);letter-spacing:-.015em;margin-bottom:34px;opacity:0;transform:translateY(28px);animation:fu 1.2s var(--expo) 1.1s forwards}
+.hero-h1 em{font-style:italic;color:rgba(230,221,208,.75)}
+.hero-sub{font-family:var(--font-b);font-size:.9rem;font-weight:300;line-height:1.9;color:rgba(244,239,229,.68);max-width:450px;margin-bottom:50px;letter-spacing:.02em;opacity:0;transform:translateY(18px);animation:fu 1s var(--expo) 1.35s forwards}
+.hero-acts{display:flex;align-items:center;gap:36px;opacity:0;transform:translateY(18px);animation:fu 1s var(--expo) 1.55s forwards}
+
+.hero-scroll-ind{position:absolute;bottom:42px;right:64px;z-index:5;display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;animation:fade 1s var(--expo) 2.4s forwards}
+.hero-scroll-ind span{font-family:var(--font-b);font-size:.56rem;letter-spacing:.32em;text-transform:uppercase;color:rgba(244,239,229,.42);writing-mode:vertical-lr}
+.scroll-bar{width:1px;height:56px;background:linear-gradient(to bottom,var(--gold),transparent);animation:spulse 2.5s ease-in-out infinite}
+@keyframes spulse{0%,100%{opacity:.35;transform:scaleY(.7)}50%{opacity:1;transform:scaleY(1)}}
+
+.vid-mute{position:absolute;bottom:42px;left:80px;z-index:5;width:40px;height:40px;border:1px solid rgba(200,162,73,.4);display:flex;align-items:center;justify-content:center;color:rgba(244,239,229,.6);font-size:.75rem;transition:border-color .3s,color .3s;opacity:0;animation:fade 1s var(--expo) 2.2s forwards}
+.vid-mute:hover{border-color:var(--gold);color:var(--warm-white)}
+
+@keyframes fu{to{opacity:1;transform:none}}
+@keyframes fade{to{opacity:1}}
+
+/* ════════════════════════════════════════════
+   MARQUEE
+════════════════════════════════════════════ */
+.marquee{background:var(--ink);padding:13px 0;overflow:hidden;white-space:nowrap}
+.marquee-inner{display:inline-flex;animation:mqs 30s linear infinite}
+.marquee-inner span{font-family:var(--font-d);font-style:italic;font-size:.82rem;font-weight:300;color:var(--gold);letter-spacing:.14em;padding:0 38px}
+.marquee-inner .dot{color:var(--terracotta);font-style:normal;padding:0}
+@keyframes mqs{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ════════════════════════════════════════════
+   STORY SECTION
+════════════════════════════════════════════ */
+#story{background:var(--warm-white);display:grid;grid-template-columns:1fr 1fr;min-height:100vh}
+.story-vis{position:relative;overflow:hidden}
+.story-vis img{width:100%;height:100%;object-fit:cover;transition:transform 9s var(--ease)}
+.story-vis:hover img{transform:scale(1.04)}
+.story-vis-tag{position:absolute;bottom:48px;left:48px;background:var(--terracotta);color:var(--warm-white);font-family:var(--font-b);font-size:.6rem;font-weight:400;letter-spacing:.24em;text-transform:uppercase;padding:9px 16px}
+.story-text{padding:100px 80px;display:flex;flex-direction:column;justify-content:center}
+.story-body{font-family:var(--font-b);font-size:.93rem;line-height:1.95;color:var(--charcoal);font-weight:300;margin-bottom:22px;max-width:440px}
+.story-grid{margin-top:48px;padding-top:40px;border-top:1px solid var(--sand);display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.sg-item label{font-family:var(--font-b);font-size:.56rem;font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:var(--terracotta);display:block;margin-bottom:5px}
+.sg-item p{font-family:var(--font-d);font-size:1rem;font-weight:400;color:var(--ink);line-height:1.5}
+
+/* ════════════════════════════════════════════
+   VIDEO ATMOSPHERE STRIP (between sections)
+════════════════════════════════════════════ */
+.atm-strip{position:relative;height:55vh;min-height:360px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.atm-strip video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.atm-strip .atm-poster{position:absolute;inset:0;z-index:1;transition:opacity 1s}
+.atm-strip .atm-poster.hide{opacity:0}
+.atm-strip .atm-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(rgba(22,17,13,.55),rgba(22,17,13,.55))}
+.atm-strip .atm-text{position:relative;z-index:3;text-align:center;padding:0 40px}
+.atm-strip .atm-text p{font-family:var(--font-d);font-style:italic;font-size:clamp(1.6rem,3.5vw,2.8rem);font-weight:300;color:var(--warm-white);line-height:1.45;margin-bottom:16px}
+.atm-strip .atm-text span{font-family:var(--font-b);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+
+/* ════════════════════════════════════════════
+   EXPERIENCE CARDS
+════════════════════════════════════════════ */
+#experience{background:var(--ink);padding:140px 80px;position:relative;overflow:hidden}
+.exp-bg-word{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--font-d);font-size:clamp(8rem,20vw,22rem);font-weight:300;font-style:italic;color:rgba(200,162,73,.035);white-space:nowrap;pointer-events:none;user-select:none}
+.exp-header{text-align:center;margin-bottom:90px;position:relative;z-index:1}
+.exp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;position:relative;z-index:1}
+.exp-card{position:relative;overflow:hidden;aspect-ratio:3/4}
+.exp-card img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.exp-card:hover img{transform:scale(1.07)}
+.exp-card-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(22,17,13,.88) 0%,transparent 52%);transition:background .5s}
+.exp-card:hover .exp-card-ov{background:linear-gradient(to top,rgba(22,17,13,.92) 0%,rgba(22,17,13,.18) 52%)}
+.exp-card-ct{position:absolute;bottom:0;left:0;right:0;padding:34px 30px;transform:translateY(6px);transition:transform .5s var(--expo)}
+.exp-card:hover .exp-card-ct{transform:none}
+.exp-num{font-family:var(--font-b);font-size:.7rem;font-weight:400;letter-spacing:.2em;color:var(--gold);margin-bottom:8px}
+.exp-title{font-family:var(--font-d);font-size:1.7rem;font-weight:300;color:var(--warm-white);line-height:1.2;margin-bottom:10px}
+.exp-desc{font-family:var(--font-b);font-size:.77rem;line-height:1.7;color:rgba(244,239,229,.6);font-weight:300;opacity:0;transform:translateY(8px);transition:opacity .5s var(--expo) .06s,transform .5s var(--expo) .06s}
+.exp-card:hover .exp-desc{opacity:1;transform:none}
+
+/* ════════════════════════════════════════════
+   ★ MENU SECTION — THE CENTREPIECE ★
+════════════════════════════════════════════ */
+#menu{background:var(--parchment);padding:140px 80px}
+.menu-header{text-align:center;margin-bottom:80px}
+.menu-header .sec-title{font-size:clamp(3rem,7vw,6rem)}
+
+/* Category tab nav */
+.menu-tabs{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:72px;border-bottom:1px solid var(--sand-2)}
+.menu-tab{font-family:var(--font-b);font-size:.65rem;font-weight:400;letter-spacing:.24em;text-transform:uppercase;color:rgba(22,17,13,.45);padding:14px 28px;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .3s,border-color .3s;cursor:none}
+.menu-tab.active{color:var(--terracotta);border-color:var(--terracotta)}
+.menu-tab:hover:not(.active){color:var(--ink)}
+
+/* Category panels */
+.menu-panel{display:none}
+.menu-panel.active{display:block;animation:panelIn .55s var(--expo) forwards}
+@keyframes panelIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* Intro text for each section */
+.menu-panel-intro{text-align:center;margin-bottom:64px}
+.menu-panel-intro p{font-family:var(--font-d);font-style:italic;font-size:1.25rem;font-weight:300;color:var(--charcoal);max-width:560px;margin:0 auto;line-height:1.7}
+
+/* Dish grid */
+.dish-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+
+/* Individual dish card */
+.dish-card{position:relative;background:var(--warm-white);padding:32px 36px;border-bottom:1px solid var(--sand);display:flex;align-items:flex-start;justify-content:space-between;gap:24px;transition:background .3s}
+.dish-card:hover{background:#fff}
+.dish-card.featured{background:var(--ink);border-bottom:none}
+.dish-card.featured:hover{background:var(--charcoal)}
+
+.dish-card-body{flex:1}
+.dish-name{font-family:var(--font-d);font-size:1.35rem;font-weight:400;color:var(--ink);letter-spacing:.01em;margin-bottom:4px;line-height:1.2}
+.dish-card.featured .dish-name{color:var(--warm-white)}
+.dish-sub{font-family:var(--font-d);font-style:italic;font-size:.92rem;font-weight:300;color:var(--terracotta);margin-bottom:10px}
+.dish-card.featured .dish-sub{color:var(--gold)}
+.dish-desc{font-family:var(--font-b);font-size:.78rem;line-height:1.75;color:rgba(44,35,24,.6);font-weight:300;max-width:380px}
+.dish-card.featured .dish-desc{color:rgba(244,239,229,.55)}
+.dish-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.dish-tag{font-family:var(--font-b);font-size:.55rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--terracotta);border:1px solid rgba(181,72,26,.25);padding:3px 9px}
+.dish-card.featured .dish-tag{color:var(--gold);border-color:rgba(200,162,73,.3)}
+
+.dish-badge{position:absolute;top:20px;right:20px;background:var(--terracotta);color:var(--warm-white);font-family:var(--font-b);font-size:.52rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;padding:5px 10px}
+.dish-card.featured .dish-badge{background:var(--gold);color:var(--ink)}
+
+/* For larger dish — the hero dish */
+.dish-hero{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:380px;position:relative;overflow:hidden;background:var(--ink)}
+.dish-hero-img{position:relative;overflow:hidden}
+.dish-hero-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease);min-height:380px}
+.dish-hero:hover .dish-hero-img img{transform:scale(1.04)}
+.dish-hero-content{padding:56px 56px;display:flex;flex-direction:column;justify-content:center}
+.dish-hero-content .dish-name{font-size:2.2rem;color:var(--warm-white)}
+.dish-hero-content .dish-sub{font-size:1.05rem}
+.dish-hero-content .dish-desc{color:rgba(244,239,229,.62);max-width:none;font-size:.85rem}
+.dish-hero-content .dish-tags{margin-top:20px}
+
+/* Single-col layout for larger sections */
+.dish-grid.single{grid-template-columns:1fr}
+.dish-grid.trio{grid-template-columns:repeat(3,1fr)}
+
+/* Wine grid */
+.wine-cols{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:48px}
+.wine-category h4{font-family:var(--font-d);font-size:1.4rem;font-weight:400;color:var(--ink);letter-spacing:.03em;margin-bottom:24px;padding-bottom:14px;border-bottom:1px solid var(--sand-2)}
+.wine-item{padding:16px 0;border-bottom:1px solid rgba(var(--sand),0.5);display:flex;justify-content:space-between;align-items:flex-start;gap:24px}
+.wine-item:last-child{border-bottom:none}
+.wine-name{font-family:var(--font-d);font-size:1.05rem;font-weight:400;color:var(--ink)}
+.wine-region{font-family:var(--font-b);font-size:.72rem;font-weight:300;color:rgba(44,35,24,.5);margin-top:2px}
+
+/* Desserts — special layout */
+.dessert-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.dessert-card{padding:36px 28px;background:var(--warm-white);border-bottom:1px solid var(--sand);transition:background .3s}
+.dessert-card:hover{background:#fff}
+.dessert-card .dish-name{font-size:1.2rem}
+
+/* ════════════════════════════════════════════
+   WINE / ATMOSPHERE VIDEO SECTION
+════════════════════════════════════════════ */
+#wine{display:grid;grid-template-columns:1fr 1fr;min-height:90vh}
+.wine-vid-side{position:relative;overflow:hidden;background:var(--dusk)}
+.wine-vid-side video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.75}
+.wine-vid-side .wvs-poster{position:absolute;inset:0;z-index:1;transition:opacity 1s}
+.wine-vid-side .wvs-poster.hide{opacity:0}
+.wine-vid-side .wvs-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(135deg,rgba(22,17,13,.4),rgba(22,17,13,.2))}
+.wine-vid-side .wvs-label{position:absolute;bottom:48px;left:48px;z-index:3}
+.wvs-label-text{font-family:var(--font-d);font-style:italic;font-size:1.6rem;font-weight:300;color:var(--warm-white);margin-bottom:4px}
+.wvs-label-sub{font-family:var(--font-b);font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+
+.wine-text-side{padding:100px 80px;display:flex;flex-direction:column;justify-content:center;background:var(--dusk)}
+.wine-text-side .sec-title{color:var(--warm-white)}
+.wine-text-side .sec-title em{color:var(--gold)}
+.wine-body{font-family:var(--font-b);font-size:.91rem;line-height:1.95;color:rgba(244,239,229,.58);font-weight:300;margin-bottom:52px;max-width:420px}
+.wine-features{display:flex;flex-direction:column}
+.wf-item{padding:20px 0;border-bottom:1px solid rgba(244,239,229,.08);display:flex;align-items:center;gap:22px}
+.wf-item:first-child{border-top:1px solid rgba(244,239,229,.08)}
+.wf-icon{width:36px;height:36px;border:1px solid rgba(200,162,73,.35);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.95rem}
+.wf-text strong{display:block;font-family:var(--font-d);font-size:1rem;font-weight:400;color:var(--warm-white);margin-bottom:2px}
+.wf-text span{font-family:var(--font-b);font-size:.74rem;color:rgba(244,239,229,.45);font-weight:300}
+
+/* ════════════════════════════════════════════
+   PARALLAX QUOTE (with video bg option)
+════════════════════════════════════════════ */
+#parallax{position:relative;height:68vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+#parallax video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pax-poster{position:absolute;inset:0;z-index:1;transition:opacity 1s}
+.pax-poster.hide{opacity:0}
+.pax-overlay{position:absolute;inset:0;z-index:2;background:rgba(22,17,13,.54)}
+.pax-grain{position:absolute;inset:0;z-index:3;opacity:.22;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");pointer-events:none}
+.pax-content{position:relative;z-index:4;text-align:center;max-width:820px;padding:0 40px}
+.pax-quote{font-family:var(--font-d);font-style:italic;font-size:clamp(1.8rem,4vw,3.3rem);font-weight:300;color:var(--warm-white);line-height:1.38;margin-bottom:26px}
+.pax-attr{font-family:var(--font-b);font-size:.62rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold)}
+#pax-bg{position:absolute;inset:-15%;will-change:transform}
+
+/* ════════════════════════════════════════════
+   CTA RESERVATION
+════════════════════════════════════════════ */
+#reservation{background:var(--warm-white);padding:160px 80px;text-align:center;position:relative;overflow:hidden}
+.res-circle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:480px;height:480px;border-radius:50%;border:1px solid rgba(181,72,26,.06);pointer-events:none}
+.res-circle::before{content:'';position:absolute;inset:28px;border-radius:50%;border:1px solid rgba(181,72,26,.08)}
+.res-circle::after{content:'';position:absolute;inset:58px;border-radius:50%;border:1px solid rgba(181,72,26,.05)}
+.res-eye{font-family:var(--font-b);font-size:.6rem;font-weight:400;letter-spacing:.34em;text-transform:uppercase;color:var(--terracotta);margin-bottom:26px}
+.res-h2{font-family:var(--font-d);font-weight:300;font-size:clamp(3rem,7.5vw,6.5rem);line-height:1.0;color:var(--ink);margin-bottom:26px}
+.res-h2 em{font-style:italic;color:var(--terracotta)}
+.res-sub{font-family:var(--font-b);font-size:.91rem;line-height:1.85;color:var(--charcoal);font-weight:300;max-width:460px;margin:0 auto 52px}
+.res-info{display:flex;align-items:center;justify-content:center;gap:44px;margin-top:52px;padding-top:44px;border-top:1px solid var(--sand)}
+.rii{text-align:center}
+.rii label{display:block;font-family:var(--font-b);font-size:.56rem;font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:var(--terracotta);margin-bottom:5px}
+.rii p{font-family:var(--font-d);font-size:1rem;font-weight:400;color:var(--ink)}
+.rii-sep{width:1px;height:38px;background:var(--sand)}
+
+/* ════════════════════════════════════════════
+   GALLERY
+════════════════════════════════════════════ */
+#gallery{padding:120px 80px 140px;background:var(--parchment)}
+.gallery-hdr{text-align:center;margin-bottom:60px}
+.ig-handle{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-b);font-size:.7rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--terracotta);transition:color .3s;margin-top:14px}
+.ig-handle svg{width:15px;height:15px;fill:currentColor}
+.ig-handle:hover{color:var(--terracotta-dark)}
+.gallery-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.gi{position:relative;overflow:hidden;aspect-ratio:1}
+.gi img{width:100%;height:100%;object-fit:cover;transition:transform .65s var(--ease);filter:brightness(.97) saturate(1.05)}
+.gi:hover img{transform:scale(1.08);filter:brightness(1) saturate(1.12)}
+.gi-ov{position:absolute;inset:0;background:rgba(22,17,13,.42);opacity:0;transition:opacity .4s;display:flex;align-items:center;justify-content:center}
+.gi:hover .gi-ov{opacity:1}
+.gi-ov svg{width:26px;height:26px;fill:var(--warm-white)}
+
+/* ════════════════════════════════════════════
+   LOCATION
+════════════════════════════════════════════ */
+#location{background:var(--ink);display:grid;grid-template-columns:1fr 1fr;min-height:68vh}
+.loc-map{position:relative;overflow:hidden}
+.loc-map-bg{width:100%;height:100%;min-height:400px;background:
+  linear-gradient(rgba(22,17,13,.55),rgba(22,17,13,.55)),
+  url('https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/1761136756240-F7CPW09OH0S6YY4707N5/Screenshot+2025-10-22+at+14.38.38.png')
+  center/cover;display:flex;align-items:center;justify-content:center}
+.map-pin{width:48px;height:48px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative}
+.map-pin::before{content:'';width:10px;height:10px;background:var(--gold);border-radius:50%}
+.map-pin::after{content:'';position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(200,162,73,.3);animation:mpp 2.4s ease-out infinite}
+@keyframes mpp{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.8);opacity:0}}
+.loc-info{padding:80px 80px;display:flex;flex-direction:column;justify-content:center}
+.loc-info .sec-title{font-size:clamp(2rem,3.5vw,3.2rem)}
+.contact-list{margin-top:44px;display:flex;flex-direction:column}
+.ci{display:flex;align-items:flex-start;gap:22px;padding:22px 0;border-bottom:1px solid rgba(244,239,229,.07)}
+.ci:first-child{border-top:1px solid rgba(244,239,229,.07)}
+.ci-icon{font-size:1rem;color:var(--gold);min-width:22px;margin-top:2px}
+.ci-body label{display:block;font-family:var(--font-b);font-size:.56rem;font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:rgba(244,239,229,.35);margin-bottom:4px}
+.ci-body p,.ci-body a{font-family:var(--font-d);font-size:.98rem;font-weight:300;color:var(--warm-white);line-height:1.55}
+.ci-body a:hover{color:var(--gold)}
+.hrs{display:grid;grid-template-columns:auto auto;gap:3px 20px}
+.hrs span{font-family:var(--font-b);font-size:.8rem;font-weight:300;color:rgba(244,239,229,.5)}
+.hrs strong{font-family:var(--font-b);font-size:.8rem;font-weight:400;color:var(--warm-white)}
+
+/* ════════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════════ */
+footer{background:var(--ink);border-top:1px solid rgba(244,239,229,.05);padding:72px 80px 44px}
+.ft-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;margin-bottom:60px}
+.ft-name{font-family:var(--font-d);font-size:2.1rem;font-weight:300;color:var(--warm-white);letter-spacing:.05em;margin-bottom:4px}
+.ft-sub{font-family:var(--font-b);font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
+.ft-tag{font-family:var(--font-b);font-size:.8rem;line-height:1.9;color:rgba(244,239,229,.38);font-weight:300;max-width:270px;margin-bottom:28px}
+.ft-social{display:flex;gap:12px}
+.ft-social a{width:34px;height:34px;border:1px solid rgba(244,239,229,.12);display:flex;align-items:center;justify-content:center;color:rgba(244,239,229,.45);font-size:.8rem;transition:border-color .3s,color .3s}
+.ft-social a:hover{border-color:var(--gold);color:var(--gold)}
+.ft-col h5{font-family:var(--font-b);font-size:.56rem;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:rgba(244,239,229,.3);margin-bottom:22px}
+.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.ft-col ul a{font-family:var(--font-b);font-size:.8rem;color:rgba(244,239,229,.5);font-weight:300;transition:color .3s}
+.ft-col ul a:hover{color:var(--warm-white)}
+.ft-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:28px;border-top:1px solid rgba(244,239,229,.05)}
+.ft-copy,.ft-cw{font-family:var(--font-b);font-size:.68rem;color:rgba(244,239,229,.22);font-weight:300}
+.ft-cw a{color:var(--gold);opacity:.65;transition:opacity .3s}
+.ft-cw a:hover{opacity:1}
+
+/* ════════════════════════════════════════════
+   LE GRAND DOMAINE WINE SHOWCASE
+════════════════════════════════════════════ */
+#lgd-wines {
+  background: var(--ink);
+  padding: 130px 80px 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* subtle repeating diagonal rule texture */
+#lgd-wines::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 60px,
+    rgba(200,162,73,.025) 60px,
+    rgba(200,162,73,.025) 61px
+  );
+  pointer-events: none;
+}
+
+.lgd-header {
+  text-align: center;
+  margin-bottom: 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.lgd-intro {
+  font-family: var(--font-b);
+  font-size: .9rem;
+  line-height: 1.9;
+  color: rgba(244,239,229,.5);
+  font-weight: 300;
+  max-width: 500px;
+  margin: 16px auto 0;
+}
+
+/* Filter tabs */
+.lgd-filters {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 64px;
+  position: relative;
+  z-index: 1;
+}
+
+.lgd-filter {
+  font-family: var(--font-b);
+  font-size: .62rem;
+  font-weight: 400;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: rgba(244,239,229,.38);
+  padding: 12px 26px;
+  border-bottom: 1px solid rgba(244,239,229,.1);
+  margin-bottom: -1px;
+  transition: color .3s, border-color .3s;
+  cursor: none;
+}
+
+.lgd-filter.active {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+.lgd-filter:hover:not(.active) {
+  color: rgba(244,239,229,.65);
+}
+
+/* Wine grid */
+.lgd-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Individual wine card */
+.lgd-card {
+  background: rgba(244,239,229,.03);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 28px 36px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(244,239,229,.06);
+  transition: background .4s var(--ease), border-color .4s, transform .4s var(--expo);
+  cursor: none;
+}
+
+.lgd-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(200,162,73,.06) 100%);
+  opacity: 0;
+  transition: opacity .5s;
+}
+
+.lgd-card:hover {
+  background: rgba(244,239,229,.065);
+  border-color: rgba(200,162,73,.25);
+  transform: translateY(-4px);
+}
+
+.lgd-card:hover::before {
+  opacity: 1;
+}
+
+/* hidden state for filter */
+.lgd-card.lgd-hidden {
+  display: none;
+}
+
+/* Red wine cards get a subtle warm tint on hover */
+.lgd-card--red:hover {
+  background: rgba(180,80,40,.08);
+  border-color: rgba(180,80,40,.3);
+}
+
+.lgd-card--rose:hover {
+  background: rgba(220,140,140,.07);
+  border-color: rgba(220,140,140,.25);
+}
+
+/* Bottle image area */
+.lgd-card-img-wrap {
+  position: relative;
+  width: 90px;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+  flex-shrink: 0;
+}
+
+.lgd-card-img-wrap img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  width: auto;
+  height: 100%;
+  display: block;
+  transition: transform .6s var(--expo), filter .4s;
+  filter: drop-shadow(0 12px 28px rgba(0,0,0,.55));
+}
+
+.lgd-card:hover .lgd-card-img-wrap img {
+  transform: translateY(-8px) scale(1.04);
+  filter: drop-shadow(0 22px 36px rgba(0,0,0,.65));
+}
+
+/* Shimmer overlay on hover */
+.lgd-card-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(244,239,229,.07) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0s;
+  pointer-events: none;
+}
+
+.lgd-card:hover .lgd-card-shimmer {
+  transform: translateX(120%);
+  transition: transform .7s var(--ease);
+}
+
+/* Card text */
+.lgd-card-body {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.lgd-card-vintage {
+  font-family: var(--font-b);
+  font-size: .56rem;
+  font-weight: 500;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.lgd-card-name {
+  font-family: var(--font-d);
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--warm-white);
+  line-height: 1.3;
+  letter-spacing: .01em;
+}
+
+.lgd-village {
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(244,239,229,.65);
+  font-size: .9em;
+}
+
+.lgd-card-varietal {
+  font-family: var(--font-b);
+  font-size: .7rem;
+  font-weight: 400;
+  letter-spacing: .12em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.lgd-card-estate {
+  font-family: var(--font-b);
+  font-size: .65rem;
+  font-weight: 300;
+  color: rgba(244,239,229,.32);
+  letter-spacing: .08em;
+  margin-bottom: 20px;
+}
+
+/* Technical sheet link */
+.lgd-sheet-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-b);
+  font-size: .58rem;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(244,239,229,.4);
+  border-bottom: 1px solid rgba(244,239,229,.15);
+  padding-bottom: 3px;
+  margin-top: auto;
+  transition: color .3s, border-color .3s, gap .3s var(--expo);
+}
+
+.lgd-sheet-link svg {
+  width: 14px;
+  height: 14px;
+  transition: transform .3s var(--expo);
+}
+
+.lgd-card:hover .lgd-sheet-link {
+  color: var(--gold);
+  border-color: var(--gold);
+  gap: 12px;
+}
+
+.lgd-card:hover .lgd-sheet-link svg {
+  transform: translateX(3px);
+}
+
+/* Footer link */
+.lgd-footer {
+  text-align: center;
+  margin-top: 72px;
+  position: relative;
+  z-index: 1;
+}
+
+.lgd-estate-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-b);
+  font-size: .68rem;
+  font-weight: 400;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(244,239,229,.45);
+  transition: color .3s, gap .3s var(--expo);
+}
+
+.lgd-estate-link svg {
+  width: 16px;
+  height: 16px;
+  transition: transform .3s var(--expo);
+}
+
+.lgd-estate-link:hover {
+  color: var(--gold);
+  gap: 18px;
+}
+
+.lgd-estate-link:hover svg {
+  transform: translateX(4px);
+}
+
+/* ════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════ */
+@media(max-width:1100px){
+  #lgd-wines{padding-left:40px;padding-right:40px}
+  .lgd-grid{grid-template-columns:repeat(3,1fr)}
+  nav,nav.scrolled{padding-left:40px;padding-right:40px}
+  .nav-links{display:none}
+  .nav-burger{display:flex}
+  #story,#wine,#location{grid-template-columns:1fr}
+  .story-vis{height:54vw;max-height:480px}
+  .wine-vid-side{height:50vw;max-height:420px}
+  .story-text,.wine-text-side,.loc-info{padding:72px 40px}
+  .exp-grid{grid-template-columns:1fr 1fr}
+  .exp-grid .exp-card:nth-child(3){display:none}
+  .menu-tabs{flex-wrap:wrap;gap:0}
+  .menu-tab{padding:11px 18px}
+  .dish-grid{grid-template-columns:1fr}
+  .dish-grid.trio{grid-template-columns:1fr 1fr}
+  .dish-hero{grid-template-columns:1fr}
+  .dish-hero-img{height:280px}
+  .gallery-grid{grid-template-columns:repeat(3,1fr)}
+  .gi:nth-child(n+4){display:none}
+  .ft-top{grid-template-columns:1fr 1fr;gap:40px}
+  #experience,#menu,#gallery,#reservation{padding-left:40px;padding-right:40px}
+}
+/* ════════════════════════════════════════════
+   NAV CONTACT BUTTON
+════════════════════════════════════════════ */
+.nav-contact-wrap{position:relative;display:flex;flex-direction:column;align-items:center;gap:0}
+.nav-contact-btn{font-family:var(--font-b);font-size:.66rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);background:var(--gold);padding:10px 22px;transition:background .3s,transform .3s;cursor:none}
+.nav-contact-btn:hover{background:var(--gold-bright);transform:translateY(-1px)}
+.nav-contact-reveal{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);background:var(--ink);border:1px solid rgba(200,162,73,.35);padding:10px 18px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s var(--expo),transform .3s var(--expo);transform:translateX(-50%) translateY(-6px)}
+.nav-contact-reveal.open{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
+.nav-contact-reveal a{font-family:var(--font-b);font-size:.72rem;font-weight:400;letter-spacing:.14em;color:var(--gold)}
+.nav-contact-reveal a:hover{color:var(--gold-bright)}
+/* Mobile contact button */
+.mob-contact-wrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.mob-contact-btn{font-family:var(--font-d);font-size:clamp(2.2rem,6vw,4rem);font-weight:300;color:var(--warm-white);letter-spacing:.04em;background:none;border:none;cursor:none;transition:color .3s}
+.mob-contact-btn:hover{color:var(--gold)}
+.mob-contact-reveal{display:block;font-family:var(--font-b);font-size:.82rem;letter-spacing:.18em;opacity:0;pointer-events:none;transition:opacity .4s var(--expo),transform .4s var(--expo);transform:translateY(-8px)}
+.mob-contact-reveal.open{opacity:1;pointer-events:all;transform:none}
+
+@media(max-width:768px){
+  #lgd-wines{padding:80px 24px}
+  .lgd-grid{grid-template-columns:repeat(2,1fr)}
+  .lgd-filters{flex-wrap:wrap;gap:0}
+  .lgd-filter{padding:10px 16px;font-size:.58rem}
+  nav,nav.scrolled{padding:18px 24px}
+  .hero-content{padding:0 24px 56px}
+  .vid-mute,.hero-scroll-ind{display:none}
+  .story-text,.wine-text-side,.loc-info{padding:56px 24px}
+  .story-grid{grid-template-columns:1fr;gap:18px}
+  #experience,#menu,#gallery,#reservation{padding:90px 24px}
+  .exp-grid{grid-template-columns:1fr}
+  .exp-grid .exp-card:nth-child(n+2){display:none}
+  .exp-card{aspect-ratio:4/3}
+  .menu-tabs{gap:0;overflow-x:auto;flex-wrap:nowrap;justify-content:flex-start;padding-bottom:0}
+  .menu-tab{white-space:nowrap;padding:12px 16px;font-size:.6rem}
+  .dish-grid.trio{grid-template-columns:1fr}
+  .wine-cols{grid-template-columns:1fr;gap:40px}
+  .dessert-row{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr 1fr;gap:4px}
+  .gi:nth-child(n+5){display:none}
+  .res-info{flex-direction:column;gap:24px}
+  .rii-sep{display:none}
+  .ft-top{grid-template-columns:1fr;gap:36px}
+  .ft-bottom{flex-direction:column;gap:10px;text-align:center}
+  footer{padding:56px 24px 36px}
+  #location{grid-template-columns:1fr}
+  .loc-map .loc-map-bg{min-height:280px}
+  .loc-info{padding:56px 24px}
+  .atm-strip{height:40vh}
+}
+</style>
+</head>
+<body>
+
+<!-- ────── LOADER ──────────────────────────────────────────────── -->
+<div id="loader">
+  <div class="ld-logo">Cantina</div>
+  <div class="ld-line"></div>
+  <div class="ld-pct" id="ldPct">0%</div>
+</div>
+
+<!-- ────── CURSOR ─────────────────────────────────────────────── -->
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- ────── MOBILE NAV ─────────────────────────────────────────── -->
+<div class="mob-nav" id="mobNav">
+  <a href="#story">Story</a>
+  <a href="#menu">Menu</a>
+  <a href="#experience">Experience</a>
+  <a href="#wine">Wine</a>
+  <a href="#gallery">Gallery</a>
+  <a href="#location">Find Us</a>
+  <div class="mob-contact-wrap" id="mobContactWrap">
+    <button class="mob-contact-btn" id="mobContactBtn">Contact</button>
+    <a href="tel:+27656729616" class="mob-contact-reveal" id="mobContactReveal" style="color:var(--gold)">065 672 9616</a>
+  </div>
+</div>
+
+<!-- ────── NAV ────────────────────────────────────────────────── -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Cantina<span>Le Grand Domaine · Stellenbosch</span></a>
+  <ul class="nav-links">
+    <li><a href="#story">Story</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#wine">Wine</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#location">Find Us</a></li>
+    <li>
+      <div class="nav-contact-wrap" id="navContactWrap">
+        <button class="nav-cta nav-contact-btn" id="navContactBtn" aria-expanded="false">Contact</button>
+        <div class="nav-contact-reveal" id="navContactReveal" aria-hidden="true">
+          <a href="tel:+27656729616">065 672 9616</a>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <div class="nav-burger" id="burger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════
+     HERO — THREE-PANEL CINEMATIC VIDEO
+═════════════════════════════════════════════════════════════ -->
+<section id="hero">
+
+  <!-- Three vertical video panels -->
+  <div class="hero-panels">
+
+    <div class="hero-panel" id="hPanel1">
+      <video autoplay muted loop playsinline preload="auto">
+        <source src="vd.mp4" type="video/mp4"/>
+      </video>
+      <div class="hero-panel-shade"></div>
+    </div>
+
+    <div class="hero-panel hero-panel--mid" id="hPanel2">
+      <video autoplay muted loop playsinline preload="auto">
+        <source src="vd2.mp4" type="video/mp4"/>
+      </video>
+      <div class="hero-panel-shade"></div>
+    </div>
+
+    <div class="hero-panel" id="hPanel3">
+      <video autoplay muted loop playsinline preload="auto">
+        <source src="vd3.mp4" type="video/mp4"/>
+      </video>
+      <div class="hero-panel-shade"></div>
+    </div>
+
+    <!-- Thin gold dividers between panels -->
+    <div class="hero-divider hero-divider--1"></div>
+    <div class="hero-divider hero-divider--2"></div>
+
+  </div><!-- /hero-panels -->
+
+  <!-- Global gradient overlay so text stays legible -->
+  <div class="hero-overlay"></div>
+  <div class="hero-grain-layer"></div>
+
+  <!-- Content sits on top of all panels -->
+  <div class="hero-content">
+    <div class="hero-eyebrow">Le Grand Domaine · 7 Church St · Stellenbosch</div>
+    <h1 class="hero-h1">Where wine<br><em>finds its</em><br>table</h1>
+    <p class="hero-sub">A Basque cantina born in the Cape Winelands — paella, pintxos, and a global wine list for those who believe the best meals never end.</p>
+    <div class="hero-acts">
+      <a href="#menu" class="btn-pri">Explore the Menu</a>
+      <a href="#story" class="btn-ghost">Our Story</a>
+    </div>
+  </div>
+
+  <!-- Mute toggle -->
+  <button class="vid-mute" id="vidMuteBtn" aria-label="Toggle sound">🔇</button>
+
+  <div class="hero-scroll-ind">
+    <div class="scroll-bar"></div>
+    <span>Scroll</span>
+  </div>
+
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     MARQUEE
+═════════════════════════════════════════════════════════════ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-inner">
+    <span>Basque Inspired</span><span class="dot">·</span>
+    <span>Stellenbosch Terroir</span><span class="dot">·</span>
+    <span>Shared Paella</span><span class="dot">·</span>
+    <span>Bluefin Tuna · Gambas · Carne Asada</span><span class="dot">·</span>
+    <span>Global Wine List</span><span class="dot">·</span>
+    <span>All-Day Dining</span><span class="dot">·</span>
+    <span>Walk-in Welcome</span><span class="dot">·</span>
+    <span>7 Church Street</span><span class="dot">·</span>
+    <span>Basque Inspired</span><span class="dot">·</span>
+    <span>Stellenbosch Terroir</span><span class="dot">·</span>
+    <span>Shared Paella</span><span class="dot">·</span>
+    <span>Bluefin Tuna · Gambas · Carne Asada</span><span class="dot">·</span>
+    <span>Global Wine List</span><span class="dot">·</span>
+    <span>All-Day Dining</span><span class="dot">·</span>
+    <span>Walk-in Welcome</span><span class="dot">·</span>
+    <span>7 Church Street</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     STORY
+═════════════════════════════════════════════════════════════ -->
+<section id="story">
+  <div class="story-vis reveal-l">
+    <img
+      src="https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/f30fc38e-b1d3-4c22-86bb-7674d99e2f7f/restaurant+in+Stellenbosch%2C+cantina"
+      alt="Cantina interior — warm communal dining"
+      loading="lazy"
+    />
+    <div class="story-vis-tag">Stellenbosch · Western Cape</div>
+  </div>
+  <div class="story-text reveal-r">
+    <div class="sec-label">Our Story</div>
+    <h2 class="sec-title">A corner of<br>San Sebastián<br><em>in the Winelands</em></h2>
+    <p class="story-body">Chef David Schneider built Cantina around a single, powerful idea: that the most memorable meals happen when barriers fall away — between kitchen and table, between nations of flavour, between strangers who share a bottle.</p>
+    <p class="story-body">Centred on an eye-catching communal table of bright lemon tiles, with an evocative soundtrack and a menu that roams freely between Basque coast and Cape terroir, Cantina is an ode to the original Chefs Warehouse spirit — generous, vibrant, and entirely alive.</p>
+    <div class="story-grid">
+      <div class="sg-item"><label>Location</label><p>7 Church Street<br>Stellenbosch Central</p></div>
+      <div class="sg-item"><label>Hours</label><p>Mon – Sat<br>12:00 – 21:30</p></div>
+      <div class="sg-item"><label>Dining Style</label><p>Walk-in · All-day<br>Sharing plates</p></div>
+      <div class="sg-item"><label>Cuisine</label><p>Basque-inspired<br>Global wine list</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     ATMOSPHERE VIDEO STRIP 1 — Dining Energy
+═════════════════════════════════════════════════════════════ -->
+<div class="atm-strip">
+  <!-- Replace src with actual asset: assets/videos/dining-atmosphere.mp4 -->
+  <video autoplay muted loop playsinline preload="none"
+    poster="https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/1761136756240-F7CPW09OH0S6YY4707N5/Screenshot+2025-10-22+at+14.38.38.png">
+    <source src="assets/videos/dining-atmosphere.mp4" type="video/mp4"/>
+  </video>
+  <div class="atm-poster" id="atm1Poster" style="background:url('https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/1761136756240-F7CPW09OH0S6YY4707N5/Screenshot+2025-10-22+at+14.38.38.png') center/cover"></div>
+  <div class="atm-overlay"></div>
+  <div class="atm-text reveal">
+    <p>"Informal. Vibrant. A little bit Spanish, deeply South African — and completely irresistible."</p>
+    <span>— Inside Guide, 2025</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     ★ THE MENU ★
+═════════════════════════════════════════════════════════════ -->
+<section id="menu">
+  <div class="menu-header reveal">
+    <div class="sec-label" style="justify-content:center">La Carta</div>
+    <h2 class="sec-title" style="font-size:clamp(3rem,7vw,6rem);text-align:center">The<br><em>Menu</em></h2>
+    <p style="font-family:var(--font-b);font-size:.88rem;line-height:1.9;color:var(--charcoal);font-weight:300;max-width:520px;margin:0 auto;text-align:center;margin-top:8px">All dishes are designed for the table. Order generously. Share freely. The paella feeds the whole room.</p>
+  </div>
+
+  <!-- Category tabs -->
+  <div class="menu-tabs reveal" id="menuTabs">
+    <button class="menu-tab active" data-panel="cold">Cold Plates</button>
+    <button class="menu-tab" data-panel="hot">Hot Plates</button>
+    <button class="menu-tab" data-panel="fire">From the Fire</button>
+    <button class="menu-tab" data-panel="paella">Paella</button>
+    <button class="menu-tab" data-panel="desserts">Dulces</button>
+    <button class="menu-tab" data-panel="wine-list">Wine & Drinks</button>
+  </div>
+
+  <!-- ── COLD PLATES ──────────────────────────── -->
+  <div class="menu-panel active" id="panel-cold">
+    <div class="menu-panel-intro">
+      <p>Bright, precise, and made to open the palate — our cold plates channel the pintxos bars of the Basque coast.</p>
+    </div>
+
+    <!-- Hero dish: Bluefin Tuna Belly -->
+    <div class="dish-hero reveal">
+      <div class="dish-hero-img">
+        <img src="https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/1761136523277-P3RDCA3Y3JZ34W5X5V30/Screenshot+2025-10-22+at+14.29.58.png" alt="Bluefin tuna belly" loading="lazy"/>
+      </div>
+      <div class="dish-hero-content">
+        <div class="dish-sub">Signature Cold Plate</div>
+        <h3 class="dish-name">Bluefin Tuna Belly</h3>
+        <p class="dish-desc">Silky tuna belly, slow-cured and thinly sliced, served with braised artichoke hearts, preserved lemon oil, micro herbs, and a touch of aged sherry vinegar. Each plate a small act of restraint. Each bite anything but.</p>
+        <div class="dish-tags">
+          <span class="dish-tag">Raw</span>
+          <span class="dish-tag">Gluten-free</span>
+          <span class="dish-tag">Signature</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dish-grid reveal" style="margin-top:2px">
+      <div class="dish-card">
+        <div class="dish-card-body">
+          <h3 class="dish-name">Tortilla Española</h3>
+          <div class="dish-sub">Potato · Manchego · Caramelised Onion</div>
+          <p class="dish-desc">The classic reinterpreted — layers of slow-cooked potato bound in egg, finished with oozy manchego and a golden caramelised onion jam. A dish that demands to be shared in thick, generous slices.</p>
+          <div class="dish-tags"><span class="dish-tag">Vegetarian</span><span class="dish-tag">House Classic</span></div>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <div class="dish-card-body">
+          <h3 class="dish-name">Grilled Sardines on Toast</h3>
+          <div class="dish-sub">Sourdough · Romesco · Pickled Shallot</div>
+          <p class="dish-desc">Whole sardines charred over coals, served on grilled sourdough with house-made romesco, bright pickled shallots, and a drizzle of Arbequina olive oil. Sea and smoke in every bite.</p>
+          <div class="dish-tags"><span class="dish-tag">From the Grill</span></div>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <div class="dish-card-body">
+          <h3 class="dish-name">Ibérico Charcuterie</h3>
+          <div class="dish-sub">Jamón · Chorizo · Seasonal Accompaniments</div>
+          <p class="dish-desc">A curated board of cured meats: hand-carved jamón ibérico, air-dried chorizo, cornichons, Marcona almonds, honeycomb, and house-baked pan de cristal.</p>
+          <div class="dish-tags"><span class="dish-tag">Sharing</span></div>
+        </div>
+      </div>
+
+      <div class="dish-card featured">
+        <div class="dish-card-body">
+          <h3 class="dish-name">Cantina Board</h3>
+          <div class="dish-sub">Chef's Daily Selection · For the Table</div>
+          <p class="dish-desc">Leave it to the kitchen. A rotating selection of our favourite cold preparations — the truest expression of what the team is excited about today. Best ordered immediately. Best shared freely.</p>
+          <div class="dish-tags"><span class="dish-tag">Daily Rotation</span><span class="dish-tag">Chef's Choice</span></div>
+        </div>
+        <div class="dish-badge">Today's Pick</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HOT PLATES ───────────────────────────── -->
+  <div class="menu-panel" id="panel-hot">
+    <div class="menu-panel-intro">
+      <p>Cooked with heat, patience, and a deep respect for Basque tradition — our hot plates are the warm heart of Cantina.</p>
+    </div>
+    <div class="dish-grid reveal">
+      <div class="dish-card">
+        <div class="dish-card-body">
+          <h3 class="dish-name">Gambas al Ajillo</h3>
+          <div class="dish-sub">Garlic Prawns · Chilli · Fino Sherry</div>
+          <p class="dish-desc">Whole prawns sizzled furiously in terra cotta with fragrant garlic, dried chilli, and a glug of good fino sherry. The oil at the bottom is the best part — don't waste a drop. Crusty bread essential.</p>
+          <div class="dish-tags"><span class="dish-tag">Seafood</span><span class="dish-tag">House Favourite</span></div>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <div class="dish-card-body">
+          <h3 class="dish-name">Fire-Grilled Mushrooms</h3>
+          <div class="dish-sub">Seasonal Mushrooms · Egg Yolk · Truffle</div>
+          <p class="dish-desc">A generous tangle of seasonal wild mushrooms blistered over live fire, finished with a slow-cooked egg yolk, aged parmesan, and a thread of truffle oil. Earthy, rich, and deeply satisfying.</p>
+          <div class="dish-tags"><span class="dish-tag">Vegetarian</span><span class="dish-tag">Seasonal</span></div>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <div class="dish-card-body">
+          <h3 class="dish-name">Patatas Bravas</h3>
+          <div class="dish-sub">Twice-Cooked Potato · Spiced Sauce · Aioli</div>
+          <p class="dish-desc">Crispy on the outside, fluffy within — twice-cooked potato batons served with a fiery bravas sauce and house-made saffron aioli. The most honest thing on the menu. Also the most addictive.</p>
+          <div class="dish-tags"><span class="dish-tag">Vegetarian</span><span class="dish-tag">Sharing</span></div>
+        </div>
+      </div>
+
+      <div class="dish-card featured">
+        <div class="dish-card-body">
+          <h3 class="dish-name">Pimientos de Padrón</h3>
+          <div class="dish-sub">Blistered Peppers · Fleur de Sel</div>
+          <p class="dish-desc">The game of Padrón peppers: nine mild, one fiercely hot — impossible to tell apart until it's too late. Blistered in olive oil and finished with coarse sea salt. Simple. Electric. Worth the risk.</p>
+          <div class="dish-tags"><span class="dish-tag">Vegan</span><span class="dish-tag">Spanish Classic</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FROM THE FIRE ────────────────────────── -->
+  <div class="menu-panel" id="panel-fire">
+    <div class="menu-panel-intro">
+      <p>Larger plates built for appetite — fired over coals, rested with care, and served with the confidence of a kitchen that knows exactly what it's doing.</p>
+    </div>
+
+    <!-- Hero: Ribeye -->
+    <div class="dish-hero reveal">
+      <div class="dish-hero-img">
+        <img src="https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/1761136565757-D1ZHCZ6VT1KFTT31VXH2/Screenshot+2025-10-22+at+14.31.42.png" alt="700g Fire-grilled ribeye" loading="lazy"/>
+      </div>
+      <div class="dish-hero-content">
+        <div class="dish-sub">Signature Fire Plate</div>
+        <h3 class="dish-name">700g Bone-In Ribeye</h3>
+        <p class="dish-desc">A massive bone-in ribeye, dry-aged and cooked directly over live coals in the Basque tradition. Rested, carved tableside, and served with chimichurri verde, roasted bone marrow, and fire-charred lemon. This is a meal that demands red wine, good company, and absolutely no hurry.</p>
+        <div class="dish-tags">
+          <span class="dish-tag">For Sharing</span>
+          <span class="dish-tag">Live Fire</span>
+          <span class="dish-tag">Signature</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dish-grid reveal" style="margin-top:2px">
+      <div class="dish-card">
+        <div class="dish-card-body">
+          <h3 class="dish-name">Carne Asada</h3>
+          <div class="dish-sub">Fire-Grilled Beef · Chimichurri Verde</div>
+          <p class="dish-desc">Skirt steak marinated in herbs, garlic, and citrus, then fired fast over hot coals. Sliced against the grain and draped in vibrant chimichurri verde. The simplest thing on the menu. Often the first to disappear.</p>
+          <div class="dish-tags"><span class="dish-tag">Live Fire</span></div>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <div class="dish-card-body">
+          <h3 class="dish-name">Whole Grilled Sea Bream</h3>
+          <div class="dish-sub">Sea Bream · Salsa Verde · Grilled Lemon</div>
+          <p class="dish-desc">A whole line-caught sea bream, scored and roasted over the open fire until the skin blisters and crisps. Served with a bright, herb-heavy salsa verde and charred lemon. Bones and all — that's the point.</p>
+          <div class="dish-tags"><span class="dish-tag">Sustainable</span><span class="dish-tag">Whole Fish</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PAELLA ────────────────────────────────── -->
+  <div class="menu-panel" id="panel-paella">
+    <div class="menu-panel-intro">
+      <p>The centrepiece. The reason to gather. Our paellas are made for the table — to be passed around, argued over, and finished completely. Allow 35 minutes. Worth every second.</p>
+    </div>
+
+    <!-- Full-width paella hero -->
+    <div class="dish-hero reveal">
+      <div class="dish-hero-img">
+        <img src="https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/1761136544656-FNSS7HHCJC29J86D0NXL/Screenshot+2025-10-22+at+14.30.24.png" alt="Seafood paella — the centrepiece" loading="lazy"/>
+      </div>
+      <div class="dish-hero-content">
+        <div class="dish-sub">The Ritual · Serves 2–4</div>
+        <h3 class="dish-name">Paella Cantina</h3>
+        <p class="dish-desc">Saffron-stained bomba rice cooked slowly in a rich seafood caldo until it develops the prized socarrat crust at the base. Topped with whole prawns, mussels, calamari, and roasted piquillo peppers. A shared experience. Not a side dish. Please allow 35 minutes — good things take time.</p>
+        <div class="dish-tags">
+          <span class="dish-tag">Serves 2–4</span>
+          <span class="dish-tag">35 Mins</span>
+          <span class="dish-tag">The Centrepiece</span>
+          <span class="dish-tag">Gluten-free</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dish-grid reveal" style="margin-top:2px">
+      <div class="dish-card featured">
+        <div class="dish-card-body">
+          <h3 class="dish-name">Paella Negra</h3>
+          <div class="dish-sub">Squid Ink · Calamari · Aioli</div>
+          <p class="dish-desc">Our darkest paella — bomba rice stained jet-black with squid ink, loaded with tender calamari and finished with a golden saffron aioli that cuts through the brine. Dramatic. Delicious. Turns your smile temporarily very dark.</p>
+          <div class="dish-tags"><span class="dish-tag">Squid Ink</span><span class="dish-tag">Serves 2–3</span></div>
+        </div>
+        <div class="dish-badge">Chef's Favourite</div>
+      </div>
+
+      <div class="dish-card">
+        <div class="dish-card-body">
+          <h3 class="dish-name">Paella Vegetariana</h3>
+          <div class="dish-sub">Seasonal Vegetables · Saffron · Smoked Paprika</div>
+          <p class="dish-desc">For those who take vegetables seriously. Seasonal greens, roasted root vegetables, and charred peppers in a rich, smoky saffron rice. The socarrat is the same. The satisfaction is absolute.</p>
+          <div class="dish-tags"><span class="dish-tag">Vegetarian</span><span class="dish-tag">Vegan-adaptable</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DULCES / DESSERTS ─────────────────────── -->
+  <div class="menu-panel" id="panel-desserts">
+    <div class="menu-panel-intro">
+      <p>Small, honest, and precisely sweet — our desserts respect the appetite of guests who have already eaten well.</p>
+    </div>
+    <div class="dessert-row reveal">
+      <div class="dessert-card">
+        <div class="dish-sub">House Classic</div>
+        <h3 class="dish-name">Crema Catalana</h3>
+        <p class="dish-desc">Silky vanilla custard, torched at the table until the sugar shatters. The sound alone is worth the order.</p>
+      </div>
+      <div class="dessert-card">
+        <div class="dish-sub">From the Pastry Kitchen</div>
+        <h3 class="dish-name">Churros con Chocolate</h3>
+        <p class="dish-desc">Crisp, hot churros dusted in cinnamon sugar with a thick, dark Spanish-style drinking chocolate. Childlike joy in an elegant setting.</p>
+      </div>
+      <div class="dessert-card">
+        <div class="dish-sub">Seasonal</div>
+        <h3 class="dish-name">Turron Ice Cream Sandwich</h3>
+        <p class="dish-desc">House-churned turron ice cream sandwiched between two thin almond wafers. Seasonal accompaniments. Deceptively simple.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WINE & DRINKS ────────────────────────── -->
+  <div class="menu-panel" id="panel-wine-list">
+    <div class="menu-panel-intro">
+      <p>Our wine list was built with one question in mind: what would taste extraordinary alongside a shared paella in the Basque country? Everything here answers that question.</p>
+    </div>
+    <div class="wine-cols reveal">
+      <div class="wine-category">
+        <h4>Wines by the Glass</h4>
+        <div class="wine-item"><div><div class="wine-name">Stellenview Chardonnay</div><div class="wine-region">Stellenbosch · Le Grand Domaine</div></div></div>
+        <div class="wine-item"><div><div class="wine-name">The Pledge Sauvignon Blanc</div><div class="wine-region">Stellenbosch · Le Grand Domaine</div></div></div>
+        <div class="wine-item"><div><div class="wine-name">Viura / Albariño Blend</div><div class="wine-region">Rias Baixas · Galicia, Spain</div></div></div>
+        <div class="wine-item"><div><div class="wine-name">Stellenview Cabernet Sauvignon</div><div class="wine-region">Stellenbosch · Le Grand Domaine</div></div></div>
+        <div class="wine-item"><div><div class="wine-name">Garnacha de Fuego</div><div class="wine-region">Campo de Borja · Aragón, Spain</div></div></div>
+        <div class="wine-item"><div><div class="wine-name">Cava Brut NV</div><div class="wine-region">Penedès · Catalunya, Spain</div></div></div>
+      </div>
+
+      <div class="wine-category">
+        <h4>Signature Bottles</h4>
+        <div class="wine-item"><div><div class="wine-name">Kruger Family Wines Chardonnay</div><div class="wine-region">Stellenbosch · Western Cape</div></div></div>
+        <div class="wine-item"><div><div class="wine-name">Remelluri Rioja Blanco</div><div class="wine-region">Rioja Alavesa · Spain</div></div></div>
+        <div class="wine-item"><div><div class="wine-name">Muga Reserva Rioja</div><div class="wine-region">Rioja Alta · Spain</div></div></div>
+        <div class="wine-item"><div><div class="wine-name">Château Lamothe-Guignard</div><div class="wine-region">Sauternes · Bordeaux, France</div></div></div>
+        <div class="wine-item"><div><div class="wine-name">Txakoli Ameztoi</div><div class="wine-region">Getariako Txakolina · Basque Country</div></div></div>
+        <div class="wine-item"><div><div class="wine-name">Ask our sommelier ›</div><div class="wine-region">Daily discoveries · Seasonal selections</div></div></div>
+      </div>
+
+      <div class="wine-category">
+        <h4>Cocktails & Aperitivo</h4>
+        <div class="wine-item"><div><div class="wine-name">Rebujito</div><div class="wine-region">Manzanilla sherry · 7UP · mint · lemon</div></div></div>
+        <div class="wine-item"><div><div class="wine-name">Spritz de Cantina</div><div class="wine-region">Aperol · Cava · blood orange · salt rim</div></div></div>
+        <div class="wine-item"><div><div class="wine-name">Basque Sour</div><div class="wine-region">Pisco · lemon · Txakoli · egg white</div></div></div>
+        <div class="wine-item"><div><div class="wine-name">Txakolina Tonic</div><div class="wine-region">Txakoli · tonic · cucumber · rosemary</div></div></div>
+      </div>
+
+      <div class="wine-category">
+        <h4>Non-Alcoholic</h4>
+        <div class="wine-item"><div><div class="wine-name">Agua de Valencia (NA)</div><div class="wine-region">Orange · lemon · hibiscus · soda</div></div></div>
+        <div class="wine-item"><div><div class="wine-name">Horchata de Chufa</div><div class="wine-region">Tiger nut · cinnamon · cold-pressed</div></div></div>
+        <div class="wine-item"><div><div class="wine-name">Still & Sparkling Water</div><div class="wine-region">Table · 500ml / 750ml</div></div></div>
+      </div>
+    </div>
+    <p style="text-align:center;font-family:var(--font-d);font-style:italic;font-size:1rem;color:rgba(44,35,24,.45);margin-top:52px;font-weight:300">Menu changes seasonally. Prices available in-house. Ask our team about allergies &amp; dietary requirements.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     EXPERIENCE CARDS
+═════════════════════════════════════════════════════════════ -->
+<section id="experience">
+  <div class="exp-bg-word" aria-hidden="true">Cantina</div>
+  <div class="exp-header reveal">
+    <div class="sec-label gold" style="justify-content:center">The Experience</div>
+    <h2 class="sec-title light" style="text-align:center">Three reasons<br>to <em>pull up a chair</em></h2>
+  </div>
+  <div class="exp-grid">
+    <div class="exp-card reveal">
+      <img src="https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/1761136756240-F7CPW09OH0S6YY4707N5/Screenshot+2025-10-22+at+14.38.38.png" alt="Paella ritual" loading="lazy"/>
+      <div class="exp-card-ov"></div>
+      <div class="exp-card-ct">
+        <div class="exp-num">01</div>
+        <h3 class="exp-title">The Paella Ritual</h3>
+        <p class="exp-desc">A socarrat-crusted, saffron-stained paella brought to the table whole. Pass the spoon. Start a conversation. Order the negra next.</p>
+      </div>
+    </div>
+    <div class="exp-card reveal" style="transition-delay:.12s">
+      <img src="https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/1761136523983-SV4CXFBSSOBTXI0OUYZK/Screenshot+2025-10-22+at+14.30.05.png" alt="Small plates" loading="lazy"/>
+      <div class="exp-card-ov"></div>
+      <div class="exp-card-ct">
+        <div class="exp-num">02</div>
+        <h3 class="exp-title">Pintxos & Small Plates</h3>
+        <p class="exp-desc">Tortilla, gambas, sardines, tuna belly — order four things, then order four more. That's Cantina.</p>
+      </div>
+    </div>
+    <div class="exp-card reveal" style="transition-delay:.24s">
+      <img src="https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/1761136762796-08GPXMSYCROFB92YIUBD/Screenshot+2025-10-22+at+14.38.03.png" alt="Wine" loading="lazy"/>
+      <div class="exp-card-ov"></div>
+      <div class="exp-card-ct">
+        <div class="exp-num">03</div>
+        <h3 class="exp-title">A Global Wine List</h3>
+        <p class="exp-desc">Curated by Le Grand Domaine — from Cape estates to hidden Rioja cellars to the Txakoli of the Basque coast.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     WINE VIDEO SECTION
+═════════════════════════════════════════════════════════════ -->
+<section id="wine">
+  <div class="wine-vid-side reveal-l">
+    <!-- Replace with assets/videos/wine-pour.mp4 -->
+    <video autoplay muted loop playsinline preload="none"
+      poster="https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/1761136756240-F7CPW09OH0S6YY4707N5/Screenshot+2025-10-22+at+14.38.38.png">
+      <source src="assets/videos/wine-pour.mp4" type="video/mp4"/>
+    </video>
+    <div class="wvs-poster" style="background:url('https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/1761136756240-F7CPW09OH0S6YY4707N5/Screenshot+2025-10-22+at+14.38.38.png') center/cover"></div>
+    <div class="wvs-overlay"></div>
+    <div class="wvs-label">
+      <div class="wvs-label-text">In partnership with<br>Le Grand Domaine</div>
+      <div class="wvs-label-sub">Curated · Global · Cellar-led</div>
+    </div>
+  </div>
+  <div class="wine-text-side reveal-r">
+    <div class="sec-label gold">The Cellar</div>
+    <h2 class="sec-title">Wine that<br>tells a <em>story</em></h2>
+    <p class="wine-body">Our wine list is a love letter to the vine — from Stellenbosch's celebrated estates to the ancient bodegas of Rioja, the Txakoli bars of San Sebastián, and the luminous cellars of Burgundy. Every label chosen to sing alongside the food.</p>
+    <div class="wine-features">
+      <div class="wf-item"><div class="wf-icon">🍷</div><div class="wf-text"><strong>Cape Winelands Selection</strong><span>Le Grand Domaine · Stellenview · Kruger Family</span></div></div>
+      <div class="wf-item"><div class="wf-icon">🌍</div><div class="wf-text"><strong>Global Wine Programme</strong><span>Spain · France · Italy · Beyond</span></div></div>
+      <div class="wf-item"><div class="wf-icon">🥂</div><div class="wf-text"><strong>By the Glass</strong><span>Rotating selections, always evolving</span></div></div>
+      <div class="wf-item"><div class="wf-icon">🍸</div><div class="wf-text"><strong>Basque-Inspired Cocktails</strong><span>Rebujito · Basque Sour · Spritz de Cantina</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     LE GRAND DOMAINE WINE SHOWCASE
+═════════════════════════════════════════════════════════════ -->
+<section id="lgd-wines">
+  <div class="lgd-header reveal">
+    <div class="sec-label gold" style="justify-content:center">Le Grand Domaine</div>
+    <h2 class="sec-title light" style="text-align:center;font-size:clamp(2.4rem,5vw,4.8rem)">
+      The <em>Estate Wines</em>
+    </h2>
+    <p class="lgd-intro">Hand-crafted on the slopes of Stellenbosch and curated exclusively for Cantina — these are the wines the kitchen was built around.</p>
+  </div>
+
+  <!-- Filter tabs -->
+  <div class="lgd-filters reveal">
+    <button class="lgd-filter active" data-filter="all">All Wines</button>
+    <button class="lgd-filter" data-filter="white">Whites</button>
+    <button class="lgd-filter" data-filter="red">Reds</button>
+    <button class="lgd-filter" data-filter="rosé">Rosé</button>
+  </div>
+
+  <!-- Wine cards grid -->
+  <div class="lgd-grid" id="lgdGrid">
+
+    <!-- 1. Sauvignon Blanc 2021 -->
+    <div class="lgd-card reveal" data-type="white">
+      <div class="lgd-card-img-wrap">
+        <img
+          src="https://www.granddomaine.co.za/image/smallbottle/GrandVinSB2021.jpg"
+          alt="Grand Vin de Stellenbosch Sauvignon Blanc 2021"
+          loading="lazy"
+          onerror="this.src='https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/f30fc38e-b1d3-4c22-86bb-7674d99e2f7f/restaurant+in+Stellenbosch%2C+cantina';this.style.objectFit='cover'"
+        />
+        <div class="lgd-card-shimmer"></div>
+      </div>
+      <div class="lgd-card-body">
+        <div class="lgd-card-vintage">2021</div>
+        <h3 class="lgd-card-name">Grand Vin de Stellenbosch</h3>
+        <div class="lgd-card-varietal">Sauvignon Blanc</div>
+        <div class="lgd-card-estate">Le Grand Domaine · Stellenbosch</div>
+        <a
+          href="https://www.granddomaine.co.za/wine/grand-vin-de-stellenbosch-sauvignon-blanc-2021"
+          target="_blank" rel="noopener"
+          class="lgd-sheet-link"
+        >
+          <span>See Technical Sheet</span>
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10h12M10 4l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 2. Sauvignon Blanc 2022 -->
+    <div class="lgd-card reveal" data-type="white" style="transition-delay:.07s">
+      <div class="lgd-card-img-wrap">
+        <img
+          src="https://www.granddomaine.co.za/image/smallbottle/grandvinsb2022.jpg"
+          alt="Grand Vin de Stellenbosch Sauvignon Blanc 2022"
+          loading="lazy"
+          onerror="this.src='https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/f30fc38e-b1d3-4c22-86bb-7674d99e2f7f/restaurant+in+Stellenbosch%2C+cantina';this.style.objectFit='cover'"
+        />
+        <div class="lgd-card-shimmer"></div>
+      </div>
+      <div class="lgd-card-body">
+        <div class="lgd-card-vintage">2022</div>
+        <h3 class="lgd-card-name">Grand Vin de Stellenbosch</h3>
+        <div class="lgd-card-varietal">Sauvignon Blanc</div>
+        <div class="lgd-card-estate">Le Grand Domaine · Stellenbosch</div>
+        <a
+          href="https://www.granddomaine.co.za/wine/grand-vin-de-stellenbosch-sauvignon-blanc-2022"
+          target="_blank" rel="noopener"
+          class="lgd-sheet-link"
+        >
+          <span>See Technical Sheet</span>
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10h12M10 4l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 3. Chardonnay Viognier 2022 -->
+    <div class="lgd-card reveal" data-type="white" style="transition-delay:.14s">
+      <div class="lgd-card-img-wrap">
+        <img
+          src="https://www.granddomaine.co.za/image/smallbottle/grandvinstellenboschchardviognier.jpg"
+          alt="Grand Vin de Stellenbosch le Village Chardonnay Viognier 2022"
+          loading="lazy"
+          onerror="this.src='https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/f30fc38e-b1d3-4c22-86bb-7674d99e2f7f/restaurant+in+Stellenbosch%2C+cantina';this.style.objectFit='cover'"
+        />
+        <div class="lgd-card-shimmer"></div>
+      </div>
+      <div class="lgd-card-body">
+        <div class="lgd-card-vintage">2022</div>
+        <h3 class="lgd-card-name">Grand Vin de Stellenbosch<br><span class="lgd-village">le Village</span></h3>
+        <div class="lgd-card-varietal">Chardonnay Viognier</div>
+        <div class="lgd-card-estate">Le Grand Domaine · Stellenbosch</div>
+        <a
+          href="https://www.granddomaine.co.za/wine/grand-vin-de-stellenbosch-le-village-chardonnay-viognier-2022"
+          target="_blank" rel="noopener"
+          class="lgd-sheet-link"
+        >
+          <span>See Technical Sheet</span>
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10h12M10 4l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 4. Chenin Blanc 2022 -->
+    <div class="lgd-card reveal" data-type="white" style="transition-delay:.21s">
+      <div class="lgd-card-img-wrap">
+        <img
+          src="https://www.granddomaine.co.za/image/smallbottle/grandvincheninvillage.jpg"
+          alt="Grand Vin de Stellenbosch le Village Chenin Blanc 2022"
+          loading="lazy"
+          onerror="this.src='https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/f30fc38e-b1d3-4c22-86bb-7674d99e2f7f/restaurant+in+Stellenbosch%2C+cantina';this.style.objectFit='cover'"
+        />
+        <div class="lgd-card-shimmer"></div>
+      </div>
+      <div class="lgd-card-body">
+        <div class="lgd-card-vintage">2022</div>
+        <h3 class="lgd-card-name">Grand Vin de Stellenbosch<br><span class="lgd-village">le Village</span></h3>
+        <div class="lgd-card-varietal">Chenin Blanc</div>
+        <div class="lgd-card-estate">Le Grand Domaine · Stellenbosch</div>
+        <a
+          href="https://www.granddomaine.co.za/wine/grand-vin-de-stellenbosch-le-village-chenin-blanc-2022"
+          target="_blank" rel="noopener"
+          class="lgd-sheet-link"
+        >
+          <span>See Technical Sheet</span>
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10h12M10 4l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 5. Rosé 2022 -->
+    <div class="lgd-card reveal lgd-card--rose" data-type="rosé" style="transition-delay:.28s">
+      <div class="lgd-card-img-wrap">
+        <img
+          src="https://www.granddomaine.co.za/image/smallbottle/GrandVindeStellenboschRose2021LowRes002.jpg"
+          alt="Grand Vin de Stellenbosch Rosé 2022"
+          loading="lazy"
+          onerror="this.src='https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/f30fc38e-b1d3-4c22-86bb-7674d99e2f7f/restaurant+in+Stellenbosch%2C+cantina';this.style.objectFit='cover'"
+        />
+        <div class="lgd-card-shimmer"></div>
+      </div>
+      <div class="lgd-card-body">
+        <div class="lgd-card-vintage">2022</div>
+        <h3 class="lgd-card-name">Grand Vin de Stellenbosch</h3>
+        <div class="lgd-card-varietal" style="color:#e8a0a0">Rosé</div>
+        <div class="lgd-card-estate">Le Grand Domaine · Stellenbosch</div>
+        <a
+          href="https://www.granddomaine.co.za/wine/grand-vin-de-stellenbosch-rose-2022"
+          target="_blank" rel="noopener"
+          class="lgd-sheet-link"
+        >
+          <span>See Technical Sheet</span>
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10h12M10 4l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 6. Cabernet Sauvignon-Merlot 2021 -->
+    <div class="lgd-card reveal lgd-card--red" data-type="red" style="transition-delay:.35s">
+      <div class="lgd-card-img-wrap">
+        <img
+          src="https://www.granddomaine.co.za/image/smallbottle/b7383e5dfc8e45f5beeeb5fb8f508462.jpg"
+          alt="Grand Vin de Stellenbosch Cabernet Sauvignon-Merlot 2021"
+          loading="lazy"
+          onerror="this.src='https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/f30fc38e-b1d3-4c22-86bb-7674d99e2f7f/restaurant+in+Stellenbosch%2C+cantina';this.style.objectFit='cover'"
+        />
+        <div class="lgd-card-shimmer"></div>
+      </div>
+      <div class="lgd-card-body">
+        <div class="lgd-card-vintage">2021</div>
+        <h3 class="lgd-card-name">Grand Vin de Stellenbosch</h3>
+        <div class="lgd-card-varietal" style="color:#c97a7a">Cabernet Sauvignon – Merlot</div>
+        <div class="lgd-card-estate">Le Grand Domaine · Stellenbosch</div>
+        <a
+          href="https://www.granddomaine.co.za/wine/grand-vin-de-stellenbosch-cabernet-sauvignon-merlot-2021"
+          target="_blank" rel="noopener"
+          class="lgd-sheet-link"
+        >
+          <span>See Technical Sheet</span>
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10h12M10 4l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 7. Cabernet Sauvignon 2021 -->
+    <div class="lgd-card reveal lgd-card--red" data-type="red" style="transition-delay:.42s">
+      <div class="lgd-card-img-wrap">
+        <img
+          src="https://www.granddomaine.co.za/image/smallbottle/604b06ab5f3440daa2829a1bcd366f19.jpg"
+          alt="Grand Vin de Stellenbosch Cabernet Sauvignon 2021"
+          loading="lazy"
+          onerror="this.src='https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/f30fc38e-b1d3-4c22-86bb-7674d99e2f7f/restaurant+in+Stellenbosch%2C+cantina';this.style.objectFit='cover'"
+        />
+        <div class="lgd-card-shimmer"></div>
+      </div>
+      <div class="lgd-card-body">
+        <div class="lgd-card-vintage">2021</div>
+        <h3 class="lgd-card-name">Grand Vin de Stellenbosch</h3>
+        <div class="lgd-card-varietal" style="color:#c97a7a">Cabernet Sauvignon</div>
+        <div class="lgd-card-estate">Le Grand Domaine · Stellenbosch</div>
+        <a
+          href="https://www.granddomaine.co.za/wine/grand-vin-de-stellenbosch-cabernet-sauvignon-2021"
+          target="_blank" rel="noopener"
+          class="lgd-sheet-link"
+        >
+          <span>See Technical Sheet</span>
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10h12M10 4l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /lgd-grid -->
+
+  <div class="lgd-footer reveal">
+    <a href="https://www.granddomaine.co.za" target="_blank" rel="noopener" class="lgd-estate-link">
+      Explore the full Le Grand Domaine cellar
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10h12M10 4l6 6-6 6"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     PARALLAX / VIDEO QUOTE
+═════════════════════════════════════════════════════════════ -->
+<section id="parallax">
+  <!-- Replace with assets/videos/cantina-atmosphere.mp4 -->
+  <video autoplay muted loop playsinline preload="none"
+    poster="https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/689476a7-7c01-4a52-9a02-5fee2240b1f8/Screenshot+2025-10-22+at+14.29.25.png">
+    <source src="assets/videos/cantina-atmosphere.mp4" type="video/mp4"/>
+  </video>
+  <div class="pax-poster" id="paxPoster" style="background:url('https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/689476a7-7c01-4a52-9a02-5fee2240b1f8/Screenshot+2025-10-22+at+14.29.25.png') center/cover"></div>
+  <div class="pax-overlay"></div>
+  <div class="pax-grain"></div>
+  <div class="pax-content reveal">
+    <p class="pax-quote">"The best dining is never about the food alone — it is about the feeling that lingers long after the last glass."</p>
+    <p class="pax-attr">Cantina · Stellenbosch · Est. 2024</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     RESERVATION CTA
+═════════════════════════════════════════════════════════════ -->
+<section id="reservation">
+  <div class="res-circle" aria-hidden="true"></div>
+  <div class="res-eye reveal">Walk-in Welcome · No Reservations Required</div>
+  <h2 class="res-h2 reveal">Come as<br>you <em>are</em></h2>
+  <p class="res-sub reveal">Cantina is a space without pretension. Pull up a chair on Church Street, order something to share, and let the afternoon — or evening — unfold entirely on its own terms.</p>
+  <div class="reveal"><a href="tel:+27656729616" class="btn-pri">Call Us · 065 672 9616</a></div>
+  <div class="res-info reveal">
+    <div class="rii"><label>Address</label><p>7 Church Street<br>Stellenbosch Central</p></div>
+    <div class="rii-sep"></div>
+    <div class="rii"><label>Hours</label><p>Mon – Sat<br>12:00 – 21:30</p></div>
+    <div class="rii-sep"></div>
+    <div class="rii"><label>Dining Style</label><p>All-Day<br>Walk-in Only</p></div>
+    <div class="rii-sep"></div>
+    <div class="rii"><label>Sundays</label><p>Closed</p></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     GALLERY
+═════════════════════════════════════════════════════════════ -->
+<section id="gallery">
+  <div class="gallery-hdr reveal">
+    <div class="sec-label" style="justify-content:center">Life at Cantina</div>
+    <h2 class="sec-title" style="font-size:clamp(2rem,4vw,3.2rem)">Behind the scenes</h2>
+    <a href="https://www.instagram.com/cantina_stellenbosch" target="_blank" rel="noopener" class="ig-handle">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      @cantina_stellenbosch
+    </a>
+  </div>
+  <div class="gallery-grid">
+    <div class="gi reveal"><img src="https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/f30fc38e-b1d3-4c22-86bb-7674d99e2f7f/restaurant+in+Stellenbosch%2C+cantina" alt="Cantina" loading="lazy"/><div class="gi-ov"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div></div>
+    <div class="gi reveal" style="transition-delay:.07s"><img src="https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/1761136756240-F7CPW09OH0S6YY4707N5/Screenshot+2025-10-22+at+14.38.38.png" alt="Cantina" loading="lazy"/><div class="gi-ov"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div></div>
+    <div class="gi reveal" style="transition-delay:.14s"><img src="https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/1761136523983-SV4CXFBSSOBTXI0OUYZK/Screenshot+2025-10-22+at+14.30.05.png" alt="Cantina" loading="lazy"/><div class="gi-ov"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div></div>
+    <div class="gi reveal" style="transition-delay:.21s"><img src="https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/1761136762796-08GPXMSYCROFB92YIUBD/Screenshot+2025-10-22+at+14.38.03.png" alt="Cantina" loading="lazy"/><div class="gi-ov"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div></div>
+    <div class="gi reveal" style="transition-delay:.28s"><img src="https://images.squarespace-cdn.com/content/v1/5d0539fcae0fa4000173c0da/1761136544656-FNSS7HHCJC29J86D0NXL/Screenshot+2025-10-22+at+14.30.24.png" alt="Cantina" loading="lazy"/><div class="gi-ov"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     LOCATION
+═════════════════════════════════════════════════════════════ -->
+<section id="location">
+  <div class="loc-map">
+    <div class="loc-map-bg"><div class="map-pin"></div></div>
+  </div>
+  <div class="loc-info">
+    <div class="sec-label gold reveal">Find Us</div>
+    <h2 class="sec-title light reveal">7 Church Street,<br><em>Stellenbosch</em></h2>
+    <div class="contact-list">
+      <div class="ci reveal"><div class="ci-icon">📍</div><div class="ci-body"><label>Address</label><p>7 Church St, Stellenbosch Central<br>Stellenbosch, 7600</p></div></div>
+      <div class="ci reveal"><div class="ci-icon">📞</div><div class="ci-body"><label>Phone</label><a href="tel:+27656729616">065 672 9616</a></div></div>
+      <div class="ci reveal"><div class="ci-icon">🕐</div><div class="ci-body"><label>Hours</label><div class="hrs"><span>Mon – Sat</span><strong>12:00 – 21:30</strong><span>Sunday</span><strong>Closed</strong></div></div></div>
+      <div class="ci reveal"><div class="ci-icon">📸</div><div class="ci-body"><label>Instagram</label><a href="https://www.instagram.com/cantina_stellenbosch" target="_blank" rel="noopener">@cantina_stellenbosch</a></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     FOOTER
+═════════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="ft-top">
+    <div>
+      <div class="ft-name">Cantina</div>
+      <div class="ft-sub">Le Grand Domaine · Stellenbosch</div>
+      <p class="ft-tag">A Basque-inspired cantina in the heart of the Cape Winelands — where every meal is an occasion and every glass tells a story.</p>
+      <div class="ft-social">
+        <a href="https://www.instagram.com/cantina_stellenbosch" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" width="13" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://www.granddomaine.co.za" target="_blank" rel="noopener" aria-label="Le Grand Domaine" style="font-size:.85rem">🍷</a>
+      </div>
+    </div>
+    <div class="ft-col"><h5>Menu</h5><ul><li><a href="#menu">Cold Plates</a></li><li><a href="#menu">Hot Plates</a></li><li><a href="#menu">From the Fire</a></li><li><a href="#menu">Paella</a></li><li><a href="#menu">Wine &amp; Drinks</a></li></ul></div>
+    <div class="ft-col"><h5>Visit</h5><ul><li><a href="#story">Our Story</a></li><li><a href="#location">Find Us</a></li><li><a href="tel:+27656729616">Call Us</a></li><li><a href="https://www.instagram.com/cantina_stellenbosch" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://www.granddomaine.co.za" target="_blank" rel="noopener">Le Grand Domaine</a></li></ul></div>
+    <div class="ft-col"><h5>Group</h5><ul><li><a href="https://www.chefswarehouse.co.za" target="_blank" rel="noopener">Chefs Warehouse</a></li><li><a href="https://www.chefswarehouse.co.za/about-1" target="_blank" rel="noopener">Chef David Schneider</a></li><li><a href="https://www.chefswarehouse.co.za/giftvouchers" target="_blank" rel="noopener">Gift Vouchers</a></li><li><a href="https://www.chefswarehouse.co.za/careers" target="_blank" rel="noopener">Careers</a></li></ul></div>
+  </div>
+  <div class="ft-bottom">
+    <p class="ft-copy">© 2025 Cantina Stellenbosch. All rights reserved.</p>
+    <p class="ft-cw">Part of <a href="https://www.chefswarehouse.co.za" target="_blank" rel="noopener">Chefs Warehouse</a> by Liam Tomlin</p>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════════════════════
+     JAVASCRIPT
+═════════════════════════════════════════════════════════════ -->
+<script>
+/* ── Loader ─────────────────────────────────── */
+(()=>{
+  const ld=document.getElementById('loader');
+  const pc=document.getElementById('ldPct');
+  let p=0;
+  const t=setInterval(()=>{
+    p+=Math.random()*24;
+    if(p>=100){p=100;clearInterval(t);pc.textContent='100%';setTimeout(()=>ld.classList.add('gone'),440);}
+    pc.textContent=Math.floor(p)+'%';
+  },80);
+})();
+
+/* ── Cursor ─────────────────────────────────── */
+(()=>{
+  const c=document.getElementById('cur');
+  const r=document.getElementById('cur-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;c.style.left=mx+'px';c.style.top=my+'px';});
+  (function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;r.style.left=rx+'px';r.style.top=ry+'px';requestAnimationFrame(loop);})();
+  document.querySelectorAll('a,button,.dish-card,.exp-card,.gi,.menu-tab').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{c.classList.add('hov');r.classList.add('hov');});
+    el.addEventListener('mouseleave',()=>{c.classList.remove('hov');r.classList.remove('hov');});
+  });
+})();
+
+/* ── Nav scroll ─────────────────────────────── */
+(()=>{
+  const n=document.getElementById('nav');
+  window.addEventListener('scroll',()=>n.classList.toggle('scrolled',scrollY>60),{passive:true});
+})();
+
+/* ── Mobile nav ─────────────────────────────── */
+(()=>{
+  const b=document.getElementById('burger');
+  const m=document.getElementById('mobNav');
+  b.addEventListener('click',()=>{
+    const o=b.classList.toggle('open');
+    m.classList.toggle('open',o);
+    document.body.style.overflow=o?'hidden':'';
+  });
+  m.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+    b.classList.remove('open');m.classList.remove('open');document.body.style.overflow='';
+  }));
+})();
+
+/* ── Scroll reveal ──────────────────────────── */
+(()=>{
+  const els=document.querySelectorAll('.reveal,.reveal-l,.reveal-r');
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target);}});
+  },{threshold:.1,rootMargin:'0px 0px -50px 0px'});
+  els.forEach(el=>obs.observe(el));
+})();
+
+/* ── Menu tabs ──────────────────────────────── */
+(()=>{
+  const tabs=document.querySelectorAll('.menu-tab');
+  const panels=document.querySelectorAll('.menu-panel');
+  tabs.forEach(tab=>{
+    tab.addEventListener('click',()=>{
+      tabs.forEach(t=>t.classList.remove('active'));
+      panels.forEach(p=>p.classList.remove('active'));
+      tab.classList.add('active');
+      const target=document.getElementById('panel-'+tab.dataset.panel);
+      if(target){
+        target.classList.add('active');
+        // trigger reveals inside newly shown panel
+        target.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el=>{
+          setTimeout(()=>el.classList.add('vis'),80);
+        });
+      }
+    });
+  });
+})();
+
+/* ── Parallax ───────────────────────────────── */
+(()=>{
+  const s=document.getElementById('parallax');
+  if(!s)return;
+  window.addEventListener('scroll',()=>{
+    const r=s.getBoundingClientRect();
+    const ratio=r.top/window.innerHeight;
+    s.querySelectorAll('video').forEach(v=>v.style.transform=`translateY(${ratio*50}px) scale(1.1)`);
+  },{passive:true});
+})();
+
+/* ── Video mute toggle ──────────────────────── */
+(()=>{
+  const btn=document.getElementById('vidMuteBtn');
+  const vids=document.querySelectorAll('#hPanel1 video,#hPanel2 video,#hPanel3 video');
+  if(!btn||!vids.length)return;
+  btn.addEventListener('click',()=>{
+    const muted=!vids[0].muted;
+    vids.forEach(v=>v.muted=muted);
+    btn.textContent=muted?'🔇':'🔊';
+  });
+})();
+
+/* ── Lazy-load video sources ────────────────── */
+/* Videos use preload="none"; browsers handle lazy loading natively.
+   On mobile, videos remain as poster images (no autoplay on low-power mode).
+   To swap in real video files: replace src="assets/videos/xxx.mp4" paths. */
+
+/* ── Contact button (desktop) ───────────────── */
+(()=>{
+  const btn = document.getElementById('navContactBtn');
+  const reveal = document.getElementById('navContactReveal');
+  if(!btn||!reveal) return;
+  btn.addEventListener('click', ()=>{
+    const open = reveal.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+    reveal.setAttribute('aria-hidden', !open);
+  });
+  // Close if clicking outside
+  document.addEventListener('click', e=>{
+    if(!btn.contains(e.target) && !reveal.contains(e.target)){
+      reveal.classList.remove('open');
+      btn.setAttribute('aria-expanded','false');
+      reveal.setAttribute('aria-hidden','true');
+    }
+  });
+})();
+
+/* ── Contact button (mobile) ────────────────── */
+(()=>{
+  const btn = document.getElementById('mobContactBtn');
+  const reveal = document.getElementById('mobContactReveal');
+  if(!btn||!reveal) return;
+  btn.addEventListener('click', ()=>{
+    reveal.classList.toggle('open');
+  });
+})();
+
+/* ── Le Grand Domaine wine filters ─────────── */
+(()=>{
+  const filters = document.querySelectorAll('.lgd-filter');
+  const cards   = document.querySelectorAll('.lgd-card');
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target);}});
+  },{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+
+  filters.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      filters.forEach(f=>f.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      let delay = 0;
+      cards.forEach(card=>{
+        const match = filter==='all' || card.dataset.type===filter;
+        if(match){
+          card.classList.remove('lgd-hidden');
+          card.style.transitionDelay = (delay*0.06)+'s';
+          // re-trigger reveal animation
+          card.classList.remove('vis');
+          setTimeout(()=>card.classList.add('vis'), delay*60+20);
+          delay++;
+        } else {
+          card.classList.add('lgd-hidden');
+          card.style.transitionDelay = '0s';
+        }
+      });
+    });
+  });
+
+  // Initial reveal observation
+  cards.forEach(c=>obs.observe(c));
+})();
+</script>
+</body>
+</html>
